@@ -1,0 +1,85 @@
+---
+
+- name: check pxeboot files exists
+  stat:
+    path: "{{ iso_path_root }}/{{ iso_name }}/pxeboot"
+  register: stat_result
+  tags:
+    - pxe_pre
+
+- name: create pxeboot dir
+  file:
+    path: "{{ iso_path_root }}/{{ iso_name }}/pxeboot"
+    state: directory
+    force: yes
+  become: true
+  become_user: aria2down
+  when: stat_result.stat.exists == False
+  tags:
+    - pxe_pre
+
+- name: create stage2 dir
+  file:
+    path: "{{ iso_path_root }}/{{ iso_name }}/stage2/LiveOS"
+    state: directory
+    force: yes
+    recurse: yes
+  become: true
+  become_user: aria2down
+  when: stat_result.stat.exists == False
+  tags:
+    - pxe_pre
+
+- name: extract kernel and ramdisk from a LiveCD
+  iso_extract:
+    image: "{{ iso_path_root }}/{{ iso_name }}/{{ iso_name }}-RHVH-x86_64-dvd1.iso"
+    dest: "{{ iso_path_root }}/{{ iso_name }}/pxeboot"
+    files:
+    - images/pxeboot/initrd.img
+    - images/pxeboot/vmlinuz
+  become: true
+  become_user: aria2down
+  when: stat_result.stat.exists == False
+  tags:
+    - pxe_pre
+
+- name: extract stage2 from a LiveCD
+  iso_extract:
+    image: "{{ iso_path_root }}/{{ iso_name }}/{{ iso_name }}-RHVH-x86_64-dvd1.iso"
+    dest: "{{ iso_path_root }}/{{ iso_name }}/stage2/LiveOS"
+    files:
+    - LiveOS/squashfs.img
+  become: true
+  become_user: aria2down
+  when: stat_result.stat.exists == False
+  tags:
+    - pxe_pre
+
+- name: create distro in pxe repo
+  template:
+    src: distro.j2
+    dest: "{{ distro_path }}/{{ pxe_name }}.distro"
+    force: no
+  become: true
+  become_user: pxer
+  tags:
+    - pxe_post
+
+- name: create profile in pxe repo
+  template:
+    src: profile.j2
+    dest: "{{ profile_path }}/{{ pxe_name }}.profile"
+    force: no
+  become: true
+  become_user: pxer
+  tags:
+    - pxe_post
+
+- name: git push new pexe distro and profile
+  shell: git pull && git add -A && git commit -m 'add distro {{ pxe_name }}' && git push
+  args:
+    chdir: "{{ git_repo_path }}"
+  become: true
+  become_user: pxer
+  tags:
+    - pxe_post

@@ -1,0 +1,7 @@
+---
+
+- name: create pxe profle
+  hosts: server75
+
+  roles:
+    - roles/create_pxe_profile

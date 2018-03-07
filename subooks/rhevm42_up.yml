@@ -5,6 +5,6 @@
 
   roles:
     - roles/rhevm_upgrade/pre_jobs
-    # - { role: roles/rhevm_upgrade/change_host_status, cmd: '{"$set":{"status":"running"}}' }
-    # - roles/common/unreg_rhn_sm
-    # - roles/rhevm_upgrade/rhevm42
+    - { role: roles/rhevm_upgrade/change_host_status, cmd: '{"$set":{"status":"running"}}' }
+    - roles/common/unreg_rhn_sm
+    - roles/rhevm_upgrade/rhevm42

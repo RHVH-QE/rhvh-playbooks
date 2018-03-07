@@ -1,0 +1,13 @@
+[General]
+arch : x86_64
+breed : redhat
+comment :
+kernel : {{ iso_url_root }}/{{ iso_name }}/pxeboot/vmlinuz
+initrd : {{ iso_url_root }}/{{ iso_name }}/pxeboot/initrd.img
+kernel_options : inst.stage2={{ iso_url_root }}/{{ iso_name }}/stage2 inst.ks={{ srv_url }}/kickstarts/latest.ks
+ks_meta :
+mgmt_classes :
+os_version : other
+redhat_management_key :
+redhat_management_server :
+template_files :
