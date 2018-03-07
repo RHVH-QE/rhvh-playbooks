@@ -1,0 +1,10 @@
+---
+
+- name: unregister from RHN
+  rhn_register: state=absent
+  ignore_errors: True
+
+- name: unregister from SM
+  redhat_subscription: state=absent
+  ignore_errors: True
+

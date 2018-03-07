@@ -1,0 +1,54 @@
+---
+
+- name: fetch rhvm42 latest installer.rpm
+  get_url:
+    url: "{{ rhevm42_latest_installer }}"
+    dest: "{{ installer_local_path }}"
+    force: yes
+  tags:
+    - rm42ups1
+
+- name: install the above downloaded installer rpm
+  yum:
+    name: "{{ installer_local_path }}"
+    state: latest
+    disable_gpg_check: yes
+
+- name: get rhevm repo file path
+  shell: rpm -qpl "{{ installer_local_path }}" | grep -v release | grep -v dependencies
+  register: local_repo_path
+
+- name: fix a possbilbe issue in repo file
+  lineinfile:
+    path: "{{ local_repo_path.stdout }}"
+    regexp: '^(.*)\$releasever$'
+    line: '\g<1>7Server'
+    backrefs: yes
+
+- name : upload answerbot
+  copy:
+    src: "{{ role_path }}/bin/answerbot"
+    dest: /tmp/answerbot
+    mode: 0755
+
+- name: run answerbot in engine-cleanup mode
+  command: /tmp/answerbot -e
+  ignore_errors: True
+
+- name: remove the old version rhevm
+  yum:
+    name: rhevm
+    state: absent
+
+- name: install latest rhevm
+  yum:
+    name: rhevm
+    state: latest
+
+- name: update ovirt-engine-dwh-setup package
+  yum:
+    name: ovirt-engine-dwh-setup
+    state: latest
+
+- name: run answerbot in engine-setup mode
+  command: /tmp/answerbot -i

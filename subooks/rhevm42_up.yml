@@ -1,0 +1,10 @@
+---
+
+- name: upgrade rhevm host to lastest version
+  hosts: rhevm42
+
+  roles:
+    - roles/rhevm_upgrade/pre_jobs
+    # - { role: roles/rhevm_upgrade/change_host_status, cmd: '{"$set":{"status":"running"}}' }
+    # - roles/common/unreg_rhn_sm
+    # - roles/rhevm_upgrade/rhevm42

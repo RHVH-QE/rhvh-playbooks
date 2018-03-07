@@ -1,0 +1,30 @@
+---
+
+- name: remove directory yum.repos.d
+  file: path=/etc/yum.repos.d state=absent
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+
+- name: create directory yum.repos.d
+  file: path=/etc/yum.repos.d state=directory
+
+- name: copy repo file to remote server (rhel6.x)
+  template: src=rhel68.j2 dest=/etc/yum.repos.d/rhel68.repo
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 6
+
+- name: copy repo file to remote server (rhel7.x)
+  template: src=rhel75_beta.j2 dest=/etc/yum.repos.d/rhel75_beta.j2
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7
+
+- name: Install python easy_install tools (via YUM)
+  yum: name=python-setuptools state=present
+  when: ansible_pkg_mgr == "yum"
+
+- name: Install python easy_install tools (via DNF)
+  dnf: name=python-setuptools state=present
+  when: ansible_pkg_mgr == "dnf"
+
+- name: Install python pip tools
+  easy_install: name=pip state=present
+
+- name: Install pymongo package
+  pip: name=pymongo state=present

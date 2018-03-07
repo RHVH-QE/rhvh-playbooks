@@ -1,0 +1,5 @@
+.vscode
+*.retry
+forpublish.sh
+**/vars/main.yml
+production.inv.ini
