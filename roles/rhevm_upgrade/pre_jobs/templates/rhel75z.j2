@@ -1,0 +1,24 @@
+[rhel-7.5.z]
+name=RHEL_7.5_zstream
+baseurl="{{ rhel75_1 }}"
+enabled=1
+gpgcheck=0
+
+[rhel-75-optional]
+name=RHEL_75_OPTIONAL
+baseurl="{{ rhel75_2 }}"
+enabled=1
+gpgcheck=0
+
+[rhel-7.5-extras]
+name=RHEL_75_EXTRAS
+baseurl="{{ rhel75_3 }}"
+enabled=1
+gpgcheck=0
+exclude=cockpit-bridge,cockpit-system
+
+[rhel-7.5-supplementary]
+name=RHEL_75_SUPPLEMENTARY
+baseurl="{{ rhel75_4 }}"
+enabled=1
+gpgcheck=0

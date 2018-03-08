@@ -12,7 +12,7 @@
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 6
 
 - name: copy repo file to remote server (rhel7.x)
-  template: src=rhel75_beta.j2 dest=/etc/yum.repos.d/rhel75_beta.j2
+  template: src=rhel75z.j2 dest=/etc/yum.repos.d/rhel75z.repo
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7
 
 - name: Install python easy_install tools (via YUM)

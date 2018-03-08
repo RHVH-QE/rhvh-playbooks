@@ -1,0 +1,23 @@
+---
+
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+  tags:
+  - debuger
+
+- name: reboot machine
+  command: /sbin/shutdown -r +1
+  async: 0
+  poll: 0
+  ignore_errors: true
+  tags:
+  - debuger
+
+- name: Wait 300 seconds, but only start checking after 80 seconds
+  wait_for_connection:
+    delay: 80
+    timeout: 300
+  tags:
+  - debuger
