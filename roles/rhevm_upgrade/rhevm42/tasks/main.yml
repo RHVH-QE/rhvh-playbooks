@@ -21,6 +21,12 @@
     state: absent
   ignore_errors: True
 
+- name: remove the old rhv release package
+  yum:
+    name: "rhv-release*"
+    state: absent
+  ignore_errors: True
+
 - name: install the rhevm installer rpm
   yum:
     name: "{{ rhevm42_latest_installer }}"
