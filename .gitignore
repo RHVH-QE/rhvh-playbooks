@@ -3,3 +3,4 @@
 forpublish.sh
 **/vars/main.yml
 production.inv.ini
+staging.inv.ini
