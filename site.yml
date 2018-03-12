@@ -2,3 +2,4 @@
 
 - import_playbook: subooks/rhevm42_up.yml
 - import_playbook: subooks/create_pxe.yml
+- import_playbook: subooks/routine.yml

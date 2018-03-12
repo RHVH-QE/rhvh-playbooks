@@ -1,0 +1,7 @@
+---
+
+- name: routine jobs on server 75
+  hosts: server75
+
+  roles:
+    - roles/common/prune_files

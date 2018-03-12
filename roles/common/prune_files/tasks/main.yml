@@ -1,0 +1,9 @@
+---
+
+- name: remove aria2 meta files
+  shell: find /var/resources/ -name '*.aria2' -type f -delete
+  ignore_errors: True
+  become: true
+  become_user: aria2down
+  tags:
+  - routine
