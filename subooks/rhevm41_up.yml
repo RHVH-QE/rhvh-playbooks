@@ -1,9 +1,9 @@
 ---
 
 - name: upgrade rhevm host to lastest version
-  hosts: rhevm42
+  hosts: rhevm41
   vars:
-    repo_type: 75
+    repo_type: 74
 
   roles:
     - roles/rhevm_upgrade/pre_jobs

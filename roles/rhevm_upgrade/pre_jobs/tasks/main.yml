@@ -11,9 +11,13 @@
   template: src=rhel68.j2 dest=/etc/yum.repos.d/rhel68.repo
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 6
 
-- name: copy repo file to remote server (rhel7.x)
+- name: copy repo file to remote server (rhel7.4)
+  template: src=rhel74z.j2 dest=/etc/yum.repos.d/rhel74z.repo
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7 and repo_type == 74
+
+- name: copy repo file to remote server (rhel7.5)
   template: src=rhel75z.j2 dest=/etc/yum.repos.d/rhel75z.repo
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7 and repo_type == 75
 
 - name: Install python easy_install tools (via YUM)
   yum: name=python-setuptools state=present

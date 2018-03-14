@@ -15,11 +15,19 @@
   command: /tmp/answerbot -e
   ignore_errors: True
 
-- name: remove the old version rhevm
+- name: remove the old version rhvm
   yum:
     name: "rhvm*"
     state: absent
   ignore_errors: True
+  when: repo_type == 75
+
+- name: remove the old version rhevm
+  yum:
+    name: "rhevm*"
+    state: absent
+  ignore_errors: True
+  when: repo_type == 74
 
 - name: remove the old rhv release package
   yum:
@@ -29,14 +37,29 @@
 
 - name: install the rhevm installer rpm
   yum:
+    name: "{{ rhevm41_latest_installer }}"
+    state: latest
+  when: repo_type == 74
+
+- name: install the rhevm installer rpm
+  yum:
     name: "{{ rhevm42_latest_installer }}"
     state: latest
+  when: repo_type == 75
 
-- name: install latest rhevm
+- name: install latest rhvm
   yum:
     name: "rhvm*"
     state: latest
     skip_broken: yes
+  when: repo_type == 75
+
+- name: install latest rhevm
+  yum:
+    name: "rhevm"
+    state: latest
+    skip_broken: yes
+  when: repo_type == 74
 
 - name: update ovirt-engine-dwh-setup package
   yum:
