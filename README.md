@@ -2,9 +2,9 @@
 
 this repo contains some routine jobs, such as:
 
-*   create pxe profile
-*   upgrade rhevm instance
-*   server maintenance
+* create pxe profile
+* upgrade rhevm instance
+* server maintenance
 
 ## Installation
 
@@ -17,7 +17,7 @@ this repo contains some routine jobs, such as:
 
 ```shell
 $> export ANSIBLE_HOST_KEY_CHECKING=False
-$> ansible-playbook -i production.inv.ini site.yml -e "iso_name=[iso_name]"  -t pxe_pre -t pxe_post  --limit server75
+$> ansible-playbook -i production.inv.ini site.yml -e "iso_name=[RHVH-4.1-20180315.0]"  -t pxe_pre -t pxe_post  --limit server75
 ```
 
 **upgrade rhevm**

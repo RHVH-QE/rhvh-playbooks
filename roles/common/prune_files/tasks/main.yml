@@ -6,4 +6,4 @@
   become: true
   become_user: aria2down
   tags:
-  - routine
+  - pxe_post
