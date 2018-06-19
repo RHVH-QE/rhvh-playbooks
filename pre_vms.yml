@@ -1,0 +1,7 @@
+---
+
+- name: Prepare vms for rhv installation
+  hosts: localhost
+
+  roles:
+    - roles/common/prepare_vm
